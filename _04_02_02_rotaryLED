@@ -1,0 +1,17 @@
+int angle=0;
+int led_pin = 3;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9800);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  angle=analogRead(A2);
+  analogWrite(led_pin, angle/4);
+  Serial.print("Value:");
+  Serial.print(angle);
+  Serial.println("");
+  delay(300);
+}

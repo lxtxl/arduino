@@ -1,0 +1,42 @@
+#define RED 9
+#define GREEN 10
+#define BLUE 11
+#define RED_BUTTON 8
+#define GREEN_BUTTON 4
+#define BLUE_BUTTON 3
+
+int r=255, g=255, b=255;
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(RED_BUTTON, INPUT);
+  pinMode(GREEN_BUTTON, INPUT);
+  pinMode(BLUE_BUTTON, INPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if(digitalRead(RED_BUTTON) == HIGH) {
+    --r;
+    if(r<0) {
+      r=255;
+    }
+  }
+
+  if(digitalRead(GREEN_BUTTON) == HIGH) {
+    --g;
+    if(g<0) {
+      g=255;
+    }
+  }
+
+  if(digitalRead(BLUE_BUTTON) == HIGH) {
+    --b;
+    if(b<0) {
+      b=255;
+    }
+  }
+  analogWrite(RED, r);
+  analogWrite(GREEN, g);
+  analogWrite(BLUE, b);
+  delay(10);
+}

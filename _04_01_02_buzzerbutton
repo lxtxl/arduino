@@ -1,0 +1,18 @@
+int buzzer_pin=11;
+int BUTTON = 8;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(buzzer_pin, OUTPUT);
+  pinMode(BUTTON, INPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if(digitalRead(BUTTON) == HIGH) {
+    analogWrite(buzzer_pin, 100);
+  }
+  else {
+    analogWrite(buzzer_pin, 0);
+  }
+}
