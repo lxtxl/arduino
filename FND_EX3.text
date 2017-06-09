@@ -1,0 +1,275 @@
+//FND의 각 LED의 핀번호를 입력한다.
+int a = 1;
+int b = 3;
+int c = 5;
+int d = 7;
+int e = 8;
+int f = 2;
+int g = 4;
+
+//자리점의 핀번호를 입력한다.
+int p = 6;
+
+//자리수의 핀번호를 입력한다.
+int d3 = 11;
+int d2 = 10;
+int d1 = 9;
+
+//스위치의 핀번호를 설정한다.
+int switch1 = 12;
+int switch2 = 13;
+
+//n 변수는 시간값을 표시하기 위해 사용한다.
+//ratio는 n변수가 너무 크기때문이 비율적으로 줄이기 위해 사용한다.
+//delayTime은 LED를 표시하는 시간을 설정한다.
+//button 변수는 초기화 버튼이 눌렸을 때의 상황을 표시하기 위해 사용한다.
+long n = 0;
+int ratio = 10;
+int delayTime = 1;
+int button = 1;
+
+void setup()
+{
+//입력된 아두이노 핀을 모두 아웃풋으로 설정하여 LED를 켤 수 있게 한다.
+  pinMode(d1, OUTPUT);
+  pinMode(d2, OUTPUT);
+  pinMode(d3, OUTPUT);
+  pinMode(a, OUTPUT);
+  pinMode(b, OUTPUT);
+  pinMode(c, OUTPUT);
+  pinMode(d, OUTPUT);
+  pinMode(e, OUTPUT);
+  pinMode(f, OUTPUT);
+  pinMode(g, OUTPUT);
+  pinMode(p, OUTPUT);
+
+//스위치는 신호를 받아들이는 역할을 수행하도록 설정한다.
+  pinMode(switch1, INPUT);
+  pinMode(switch2, INPUT);
+}
+
+void loop()
+{
+//timeNumber를 계산한다.
+//n이 빠르게 증가하며, 숫자가 크기 때문에 ratio변수, 숫자 10으로 나누어 표시하도록 한다.
+//ratio 값을 10을 한 것에는 특별한 의미가 없다.
+  int timeNumber = n / ratio;
+
+//먼저 LED를 모두 끈 후
+//첫번째 자리수에 timeNumber의 100의 자리를 표시한다.
+//100으로 나눈후, 10으로 나눈 후의 나머지값을 표시.
+//LED를 delayTime 값 만큼 표시한다.
+  clearLEDs();
+  pickDigit(1);
+  pickNumber( (timeNumber/100)%10 );
+  delay(delayTime);
+
+//두번째 자리수에 timeNumber의 10의 자리를 표시한다.
+//10으로 나눈후, 10으로 나눈 후의 나머지값을 표시.
+//LED를 delayTime 값 만큼 표시한다.
+  clearLEDs();
+  pickDigit(2);
+  pickNumber( (timeNumber/10)%10 );
+  delay(delayTime);
+
+//두번째 자리수에 timeNumber의 1의 자리를 표시한다.
+//10으로 나눈 후의 나머지값을 표시.
+//LED를 delayTime 값 만큼 표시한다.
+  clearLEDs();
+  pickDigit(3);
+  pickNumber( timeNumber%10 );
+  delay(delayTime);
+
+//button 의 값이 1이라면, n값을 계속 1씩 증가시킨다.
+//이후 시간을 정지시키는 상황을 연출하기 위해 필요하다.
+  if(button == 1)
+  {
+    n++;
+  }
+
+//첫 번째 버튼이 눌리면, n=0으로 만든다.
+//초기화 버튼 역할
+  if(digitalRead(switch1) == HIGH)
+  {
+    n = 0;
+  }
+
+//2번째 버튼이 눌리면 button 변수에 -1을 곱하여 상황이 변했음을 저장한다.
+//아두이노의 반응이 버튼이 눌리는 스피드보다 빠르기 때문에
+//100 밀리초 동안 딜레이를 주어 이를 해결한다.
+  if(digitalRead(switch2) == HIGH)
+  {
+    button *= -1;
+    delay(200);
+  }
+
+//에러를 방지하기 위해 timeNumber 값이 1000이 되면 n을 다시 0으로 만든다.
+  if( timeNumber == 1000)
+  {
+    n = 0;
+  }
+
+}
+
+//몇 번째 자리에 숫자를 표시할지 선택할 수 있는 함수
+void pickDigit(int x)
+{
+  digitalWrite(d1, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(d3, LOW);
+
+  switch(x)
+  {
+    case 1: digitalWrite(d1, HIGH); break;
+    case 2: digitalWrite(d2, HIGH); break;
+    default: digitalWrite(d3, HIGH);; break;
+  }
+}
+
+//입력된 값에 따라 각 숫자의 함수를 실행시켜 숫자를 표시한다.
+void pickNumber(int x)
+{
+  switch(x)
+  {
+    default: zero(); break;
+    case 1: one(); break;
+    case 2: two(); break;
+    case 3: three(); break;
+    case 4: four(); break;
+    case 5: five(); break;
+    case 6: six();  break;
+    case 7: seven(); break;
+    case 8: eight(); break;
+    case 9: nine(); break;
+  }
+}
+
+//자리점을 표시하는 함수
+void dispDec(int x)
+{
+  digitalWrite(p, LOW);
+}
+
+//모든 LED를 끄는 함수. LED의 잔상을 제거하는 목적으로 사용된다.
+void clearLEDs()
+{
+  digitalWrite(a, HIGH);
+  digitalWrite(b, HIGH);
+  digitalWrite(c, HIGH);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, HIGH);
+  digitalWrite(p, HIGH);
+}
+
+
+void zero()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, LOW);
+  digitalWrite(g, HIGH);
+}
+
+void one()
+{
+  digitalWrite(a, HIGH);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, HIGH);
+}
+
+void two()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, HIGH);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, LOW);
+}
+
+void three()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, LOW);
+}
+
+void four()
+{
+  digitalWrite(a, HIGH);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void five()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, HIGH);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void six()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, HIGH);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void seven()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, HIGH);
+}
+
+void eight()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void nine()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}

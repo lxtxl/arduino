@@ -1,0 +1,199 @@
+//FND의 각 LED의 핀번호를 입력한다.
+int a = 1;
+int b = 3;
+int c = 5;
+int d = 7;
+int e = 8;
+int f = 2;
+int g = 4;
+
+//자리점의 핀번호를 입력한다.
+int p = 6;
+
+//자리수의 핀번호를 입력한다.
+int d3 = 11;
+int d2 = 10;
+int d1 = 9;
+
+void setup()
+{
+//입력된 아두이노 핀을 모두 아웃풋으로 설정하여 LED를 켤 수 있게 한다.
+  pinMode(d1, OUTPUT);
+  pinMode(d2, OUTPUT);
+  pinMode(d3, OUTPUT);
+  pinMode(a, OUTPUT);
+  pinMode(b, OUTPUT);
+  pinMode(c, OUTPUT);
+  pinMode(d, OUTPUT);
+  pinMode(e, OUTPUT);
+  pinMode(f, OUTPUT);
+  pinMode(g, OUTPUT);
+  pinMode(p, OUTPUT);
+}
+
+void loop()
+{
+  //FND가 모두 정상작동하는지를 테스트 하기위한 간단한 소스 테스트
+
+//먼저 LED를 모두 끈 후
+  clearLEDs();
+
+//1번째 자리수에
+  digitalWrite(d1, HIGH);
+//2번째 자리수에
+  digitalWrite(d2, LOW);
+//3번째 자리수에
+  digitalWrite(d3, LOW);
+
+//숫자 8을 나타내도록 한다.
+  pickNumber(7);
+}
+
+
+//입력된 값에 따라 각 숫자의 함수를 실행시켜 숫자를 표시한다.
+void pickNumber(int x)
+{
+  switch(x)
+  {
+    default: zero(); break;
+    case 1: one(); break;
+    case 2: two(); break;
+    case 3: three(); break;
+    case 4: four(); break;
+    case 5: five(); break;
+    case 6: six();  break;
+    case 7: seven(); break;
+    case 8: eight(); break;
+    case 9: nine(); break;
+  }
+}
+
+//자리점을 표시하는 함수
+void dispDec(int x)
+{
+  digitalWrite(p, LOW);
+}
+
+//모든 LED를 끄는 함수. LED의 잔상을 제거하는 목적으로 사용된다.
+void clearLEDs()
+{
+  digitalWrite(a, HIGH);
+  digitalWrite(b, HIGH);
+  digitalWrite(c, HIGH);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, HIGH);
+  digitalWrite(p, HIGH);
+}
+
+
+void zero()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, LOW);
+  digitalWrite(g, HIGH);
+}
+
+void one()
+{
+  digitalWrite(a, HIGH);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, HIGH);
+}
+
+void two()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, HIGH);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, LOW);
+}
+
+void three()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, LOW);
+}
+
+void four()
+{
+  digitalWrite(a, HIGH);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void five()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, HIGH);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void six()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, HIGH);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void seven()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, HIGH);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, HIGH);
+  digitalWrite(g, HIGH);
+}
+
+void eight()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, LOW);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
+
+void nine()
+{
+  digitalWrite(a, LOW);
+  digitalWrite(b, LOW);
+  digitalWrite(c, LOW);
+  digitalWrite(d, LOW);
+  digitalWrite(e, HIGH);
+  digitalWrite(f, LOW);
+  digitalWrite(g, LOW);
+}
